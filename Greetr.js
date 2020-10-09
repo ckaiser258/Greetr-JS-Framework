@@ -58,7 +58,7 @@
     },
 
     formalGreeting: function () {
-      return formalGreetings[this.language] + "," + this.fullName();
+      return formalGreetings[this.language] + ", " + this.fullName();
     },
 
     greet: function (formal) {
