@@ -12,8 +12,91 @@
   //Now Greetr's return value is a new Greetr.init object (defined next).
   //Thus we don't need to use the 'new' keyword when calling Greetr()
 
+  //Developers won't have access to these variables below and won't be able to change them
+  //without going into the source code
+  //since they're defined in a closure (within this whole function).
+  //So there is not a way to access this variable from outside the function due to scope
+  //and lexical environment.
+  var supportedLangs = ["en", "es"];
+
+  var greetings = {
+    en: "Hello",
+    es: "Hola",
+  };
+
+  var formalGreetings = {
+    en: "Greetings",
+    es: "Soludos",
+  };
+
+  var logMessages = {
+    en: "Logged in",
+    es: "Inició sesión",
+  };
+  //These are objects and not arrays because it allows us to access
+  //their properties more easily since we can access them by string.
+
   //Set up prototype where we will place any methods we want to use.
-  Greetr.prototype = {};
+  Greetr.prototype = {
+    fullName: function () {
+      return this.firstName + " " + this.lastName;
+    },
+
+    validate: function () {
+      //indexOf checks if it exists in the array and returns the index.
+      //It returns -1 if it doesn't find it.
+      if (supportedLangs.indexOf(this.language) === -1) {
+        throw "Invalid language";
+      }
+    },
+
+    greeting: function () {
+      //this.language is what is being passed to the Greetr object.
+      //Grabbing respective greeting from the greetings object.
+      //ex: greeting['en'] returns "Hello"
+      return greetings[this.language] + " " + this.firstName + "!";
+    },
+
+    formalGreeting: function () {
+      return formalGreetings[this.language] + "," + this.fullName();
+    },
+
+    greet: function (formal) {
+      var msg;
+
+      if (formal) {
+        msg = this.formalGreeting();
+      } else {
+        msg = this.greeting();
+      }
+      if (console) {
+        console.log(msg);
+      }
+
+      //'this' refers to the whichever object is called at execution time.
+      //This makes the method chainable (can be chained to other methods with dot operator).
+      return this;
+    },
+
+    log: function () {
+      if (console) {
+        //IE doesn't have a console variable unless the console is open.
+        console.log(logMessages[this.language] + ": " + this.fullName());
+      }
+      //Make the object chainable:
+      return this;
+    },
+
+    //Option to update the language:
+    setLang: function (lang) {
+      this.language = lang;
+
+      this.validate();
+
+      //Make the object chainable:
+      return this;
+    },
+  };
 
   //Create our function constructor.
   Greetr.init = function (firstName = "", lastName = "", language = "en") {
