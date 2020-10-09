@@ -96,6 +96,29 @@
       //Make the object chainable:
       return this;
     },
+
+    HTMLGreeting: function (selector, formal) {
+      //If jQuery isn't around, throw error.
+      if (!$) {
+        throw "jQuery not loaded";
+      }
+
+      if (!selector) {
+        throw "Missing jQuery selector";
+      }
+
+      var msg;
+      if (formal) {
+        msg = this.formalGreeting();
+      } else {
+        msg = this.greet();
+      }
+      //jQuery method that will set the html to the msg variable.
+      $(selector).html(msg);
+
+      //Make this method chainable:
+      return this;
+    },
   };
 
   //Create our function constructor.
