@@ -62,8 +62,10 @@
     },
 
     greet: function (formal) {
+      //Declare undefined msg variable:
       var msg;
 
+      //Decide what to set the msg variable as:
       if (formal) {
         msg = this.formalGreeting();
       } else {
@@ -102,12 +104,15 @@
       if (!$) {
         throw "jQuery not loaded";
       }
-
+      //If there's not a selector in the jQuery call, throw error.
       if (!selector) {
         throw "Missing jQuery selector";
       }
 
+      //Declare undefined msg variable:
       var msg;
+
+      //Decide what to set the msg variable as:
       if (formal) {
         msg = this.formalGreeting();
       } else {
@@ -129,12 +134,15 @@
     self.firstName = firstName;
     self.lastName = lastName;
     self.language = language;
+
+    //Validate language is supported before finishing creating the object.
+    self.validate();
   };
 
   //Any Greetr.init objects will
   //point to the same prototype as Greetr.
   Greetr.init.prototype = Greetr.prototype;
 
-  //Make Greetr available everywhere by calling Greetr or G$
+  //Make Greetr available everywhere (on the global object) by calling Greetr or G$
   global.Greetr = global.G$ = Greetr;
 })(window, jQuery);
